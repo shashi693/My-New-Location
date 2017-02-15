@@ -14,17 +14,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -149,6 +153,14 @@ public class MainActivity extends AppCompatActivity implements
 
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
+    }
+
+    private void goToLocationZoom(double lat, double lng, float zoom) {
+        LatLng ll = new LatLng(lat, lng);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 16);
+        mMap.moveCamera(update);
+
+
     }
 
     private void enableMyLocation() {
@@ -288,6 +300,46 @@ public class MainActivity extends AppCompatActivity implements
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+    Marker marker;
+
+    public void geoLocate(View view) throws IOException {
+
+        EditText et  = (EditText) findViewById(R.id.editText);
+        String location = et.getText().toString();
+
+        Geocoder gc = new Geocoder(this);
+        List<Address> list = gc.getFromLocationName(location, 1);
+        Address address = list.get(0);
+        String locality = address.getLocality();
+//        String area = address.getLocality();
+
+
+        Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+
+
+        double lat = address.getLatitude();
+        double lng = address.getLongitude();
+        goToLocationZoom(lat, lng, 25);
+
+        setMarker(locality, lat, lng);
+
+    }
+
+    private void setMarker(String locality, double lat, double lng) {
+        if (marker != null) {
+            marker.remove();
+        }
+
+        MarkerOptions options = new MarkerOptions()
+                .title(locality)
+                .draggable(true)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.search_icon))
+                .position(new LatLng(lat, lng))
+                .snippet("I am here");
+
+        marker = mMap.addMarker(options);
     }
 
 
