@@ -1,0 +1,32 @@
+[
+  {
+    "featureType": "poi.place_of_worship",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "stylers": [
+      {
+        "color": "#d88e63"
+      },
+      {
+        "visibility": "simplified"
+      },
+      {
+        "weight": 5.5
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "stylers": [
+      {
+        "color": "#768dfa"
+      }
+    ]
+  }
+]

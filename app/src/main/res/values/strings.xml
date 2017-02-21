@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewLocation</string>
+    <string name="app_name">Location Night View</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
@@ -15,4 +15,6 @@
     <string name="style_label_default">Default</string>
     <string name="style_choose">Choose style</string>
     <string name="style_set_to">Style set to: %1$s</string>
+
+
 </resources>

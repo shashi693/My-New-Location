@@ -2,7 +2,6 @@ package com.avenueinfotech.newlocation;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -14,11 +13,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,7 +48,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
@@ -82,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final String SELECTED_STYLE = "selected_style";
 
-    private int mSelectedStyleId = R.string.style_label_default;
+    private int mSelectedStyleId = R.string.style_label_night;
 
     private int mStyleIds[] = {
             R.string.style_label_retro,
@@ -155,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements
         {
             LocationRequest locationRequest = LocationRequest.create();
             locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(1000);
+            locationRequest.setInterval(15000);
             locationRequest.setFastestInterval(5 * 1000);
             LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                     .addLocationRequest(locationRequest);
@@ -297,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements
     private void goToLocationZoom(double lat, double lng, float zoom) {
         LatLng ll = new LatLng(lat, lng);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 16);
-        mMap.moveCamera(update);
+        mMap.animateCamera(update);
 
 
     }
@@ -314,41 +310,41 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.styled_map, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.styled_map, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_style_choose) {
-            showStylesDialog();
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.menu_style_choose) {
+//            showStylesDialog();
+//        }
+//        return true;
+//    }
 
-    private void showStylesDialog() {
-        List<String> styleNames = new ArrayList<>();
-        for (int style : mStyleIds) {
-            styleNames.add(getString(style));
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.style_choose));
-        builder.setItems(styleNames.toArray(new CharSequence[styleNames.size()]),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mSelectedStyleId = mStyleIds[which];
-                        String msg = getString(R.string.style_set_to, getString(mSelectedStyleId));
-                        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, msg);
-                        setSelectedStyle();
-                    }
-                });
-        builder.show();
-    }
+//    private void showStylesDialog() {
+//        List<String> styleNames = new ArrayList<>();
+//        for (int style : mStyleIds) {
+//            styleNames.add(getString(style));
+//        }
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(getString(R.string.style_choose));
+//        builder.setItems(styleNames.toArray(new CharSequence[styleNames.size()]),
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        mSelectedStyleId = mStyleIds[which];
+//                        String msg = getString(R.string.style_set_to, getString(mSelectedStyleId));
+//                        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
+//                        Log.d(TAG, msg);
+//                        setSelectedStyle();
+//                    }
+//                });
+//        builder.show();
+//    }
 
     private void setSelectedStyle() {
         MapStyleOptions style;
@@ -397,6 +393,33 @@ public class MainActivity extends AppCompatActivity implements
         }
         mMap.setMapStyle(style);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.string.style_label_retro:
+//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro);
+//                break;
+//            case R.string.style_label_night:
+//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
+//                break;
+//            case R.string.style_label_grayscale:
+//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale);
+//                break;
+//            case R.string.style_label_default:
+//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
+//                break;
+//
+//            default:
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public boolean onMyLocationButtonClick() {
