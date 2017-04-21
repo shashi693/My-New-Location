@@ -11,10 +11,19 @@
     <string name="style_label_retro">Retro</string>
     <string name="style_label_night">Night</string>
     <string name="style_label_grayscale">Grayscale</string>
+    <string name="style_label_satellite">Satellite</string>
+    <string name="style_label_places">Places</string>
     <string name="style_label_no_pois_no_transit">No POIs or transit</string>
-    <string name="style_label_default">Default</string>
+    <string name="style_label_default">Normal</string>
     <string name="style_choose">Choose style</string>
     <string name="style_set_to">Style set to: %1$s</string>
+    <string name="normal">Normal</string>
+    <string name="satellite">Satellite</string>
+    <string name="go">Go</string>
 
+    <string name="banner_ad_unit_id">ca-app-pub-1183672799205641/4688975012</string>
 
+    <string name="default_place_text">Select a place to get started</string>
+    <string name="action_settings">Settings</string>
+    <string name="admob_interstitial_id">ca-app-pub-1183672799205641/4691767413</string>
 </resources>

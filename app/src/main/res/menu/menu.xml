@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.avenueinfotech.basicmaps.MainActivity">
+
+    <!--<item android:id="@+id/action_place_picker"-->
+        <!--android:title="Place Picker"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:icon="@android:drawable/ic_menu_myplaces"-->
+        <!--app:showAsAction="always" />-->
+
+    <!--<item android:id="@+id/action_guess_current_place"-->
+        <!--android:title="Guess Current Place"-->
+        <!--android:orderInCategory="200"-->
+        <!--android:icon="@android:drawable/ic_menu_mylocation"-->
+        <!--app:showAsAction="always" />-->
 
 
     <item
         android:id="@+id/mapTypeNone"
-        android:title="@string/style_label_retro"/>
+        android:title="@string/style_label_default"/>
     <item
-        android:id="@+id/mapTypeNormal"
+        android:id="@+id/mapTypeNight"
         android:title="@string/style_label_night"/>
     <item
-        android:id="@+id/mapTypeTerrain"
-        android:title="@string/style_label_grayscale"/>
-    <item
         android:id="@+id/mapTypeSatellite"
-        android:title="@string/style_label_no_pois_no_transit"/>
+        android:title="@string/style_label_satellite"/>
     <item
-        android:id="@+id/mapTypeHybrid"
-        android:title="@string/style_label_default"/>
+        android:id="@+id/mapTypeNormal"
+        android:title="@string/style_label_places"/>
+
 
 </menu>
