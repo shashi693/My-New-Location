@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Location Night View</string>
+    <string name="app_name">Maps Places Location</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
@@ -17,8 +17,9 @@
     <string name="style_label_default">Normal</string>
     <string name="style_choose">Choose style</string>
     <string name="style_set_to">Style set to: %1$s</string>
-    <string name="normal">Normal</string>
+    <string name="normal">Day View</string>
     <string name="satellite">Satellite</string>
+    <string name="day">Night View</string>
     <string name="go">Go</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-1183672799205641/4688975012</string>

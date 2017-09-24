@@ -29,6 +29,10 @@
     <item
         android:id="@+id/mapTypeNormal"
         android:title="@string/style_label_places"/>
+    <item
+        android:id="@+id/mapTypeRetro"
+        android:title="@string/style_label_places"/>
+
 
 
 </menu>

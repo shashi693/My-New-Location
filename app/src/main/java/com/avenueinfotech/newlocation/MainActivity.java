@@ -12,6 +12,7 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,10 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avenueinfotech.newlocation.utils.GPSTracker;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -77,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         ActivityCompat.OnRequestPermissionsResultCallback, LocationListener {
 
-    InterstitialAd mInterstitialAd;
-    private InterstitialAd interstitial;
+//    InterstitialAd mInterstitialAd;
+//    private InterstitialAd interstitial;
 
     private int PLACE_PICKER_REQUEST = 1;
     private AutoCompleteAdapter mAdapter;
@@ -106,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements
     Button satbutton;
     Button norbutton;
 
+    WifiManager wifiManager;
+    TextView wifiStatus;
+
     private GoogleApiClient mApiClient;
     ConnectionDetector cd;
     private ProgressDialog dialog;
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final String SELECTED_STYLE = "selected_style";
 
-    private int mSelectedStyleId = R.string.style_label_night;
+    private int mSelectedStyleId = R.string.style_label_default;
 
     private int mStyleIds[] = {
             R.string.style_label_retro,
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements
             R.string.style_label_default,
     };
 
-    private static final LatLng SYDNEY = new LatLng(-33.8688, 151.2091);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,19 +147,7 @@ public class MainActivity extends AppCompatActivity implements
                 .setRequestAgent("android_studio:ad_template").build();
         adView.loadAd(adRequest);
 
-        // Prepare the Interstitial Ad
-        interstitial = new InterstitialAd(MainActivity.this);
-// Insert the Ad Unit ID
-        interstitial.setAdUnitId(getString(R.string.admob_interstitial_id));
 
-        interstitial.loadAd(adRequest);
-// Prepare an Interstitial Ad Listener
-        interstitial.setAdListener(new AdListener() {
-            public void onAdLoaded() {
-                // Call displayInterstitial() function
-                displayInterstitial();
-            }
-        });
 
         mApiClient = new GoogleApiClient.Builder(this)
                 .addApi(ActivityRecognition.API)
@@ -178,19 +168,7 @@ public class MainActivity extends AppCompatActivity implements
             getLocation();
         }
 
-//        btnShow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                    return;
-//                }
-//                Location myLocation = locationManager.getLastKnownLocation(provider);
-//                latitude = myLocation.getLatitude();
-//                logitude = myLocation.getLongitude();
 //
-//                new GetAddress().execute(String.format("%.4f,%.4f",latitude,logitude));
-//            }
-//        });
 
         gps = new GPSTracker(this);
 
@@ -209,9 +187,7 @@ public class MainActivity extends AppCompatActivity implements
         dialog.setCancelable(false);
 
         cd = new ConnectionDetector(this);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+//
         if (cd.isConnected()) {
             Toast.makeText(MainActivity.this, "Internet Connected", Toast.LENGTH_SHORT).show();
         } else {
@@ -224,34 +200,25 @@ public class MainActivity extends AppCompatActivity implements
         mapFragment.getMapAsync(this);
 
 
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        wifiSwitch = (Switch)findViewById(R.id.wifiswitch);
+        wifiStatus = (TextView)findViewById(R.id.wifistatus);
 
-//        mTextView = (TextView) findViewById(R.id.textview);
+        if (wifiManager.isWifiEnabled()){
+//            wifiSwitch.setChecked(true);
+            wifiStatus.setText("Wifi ON");
+        } else {
+//            wifiSwitch.setChecked(false);
+            wifiStatus.setText("Wifi OFF");
+        }
 
-//        mPredictTextView = (AutoCompleteTextView) findViewById(R.id.predicttextview);
-//        mAdapter = new AutoCompleteAdapter(this);
-//        mPredictTextView.setAdapter(mAdapter);
-//
-//        mPredictTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                AutoCompletePlace place = (AutoCompletePlace) parent.getItemAtPosition(position);
-//                findPlaceById(place.getId());
-//            }
-//        });
+
+
 
         satellite();
         normal();
+        day();
     }
-
-
-    private void displayInterstitial() {
-
-        if (interstitial.isLoaded()) {
-            interstitial.show();
-        }
-    }
-
-
 
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
@@ -268,8 +235,8 @@ public class MainActivity extends AppCompatActivity implements
         {
             LocationRequest locationRequest = LocationRequest.create();
             locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(15000);
-            locationRequest.setFastestInterval(5 * 1000);
+            locationRequest.setInterval(300000);
+            locationRequest.setFastestInterval(50 * 10000);
             LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                     .addLocationRequest(locationRequest);
 
@@ -328,21 +295,6 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (mApiClient != null)
-//            mApiClient.connect();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        if (mApiClient != null && mApiClient.isConnected()) {
-//            mAdapter.setGoogleApiClient(null);
-//            mApiClient.disconnect();
-//        }
-//        super.onStop();
-//    }
 
     private void findPlaceById(String id) {
         if (TextUtils.isEmpty(id) || mApiClient == null || !mApiClient.isConnected())
@@ -365,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void guessCurrentPlace() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi.getCurrentPlace(mApiClient, null);
@@ -425,50 +377,6 @@ public class MainActivity extends AppCompatActivity implements
         mTextView.setText( content );
     }
 
-//    private class GetAddress extends AsyncTask<String, Void, String> {
-//        ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            try {
-//                double latitude = Double.parseDouble(strings[0].split(",")[0]);
-//                double logitude = Double.parseDouble(strings[0].split(",")[1]);
-//                String response;
-//                HttpDataHandler http = new HttpDataHandler();
-//                String url = String.format("https://maps.googleapis.com/maps/api/geocode/json?latlng=%.4f,%.4f&sensor=false", latitude, logitude);
-//                response = http.GetHTTPData(url);
-//                return response;
-//            } catch (Exception ex) {
-//
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-////            dialog.setMessage("Please wait...");
-////            dialog.setCanceledOnTouchOutside(true);
-////            dialog.show();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            try {
-//                JSONObject jsonObject = new JSONObject(s);
-//                String address = ((JSONArray) jsonObject.get("results")).getJSONObject(0).get("formatted_address").toString();
-//                textView.setText(address);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (dialog.isShowing())
-//                dialog.dismiss();
-//        }
-//
-//    }
-
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         // Store the selected map style, so we can assign it when the activity resumes.
@@ -478,10 +386,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (mApiClient != null)
+            mApiClient.connect();
+    }
+
+    @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-        //      mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 14));
-
 
         setSelectedStyle();
 
@@ -564,7 +477,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void goToLocationZoom(double lat, double lng, float zoom) {
         LatLng ll = new LatLng(lat, lng);
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 14);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 17);
         mMap.animateCamera(update);
 
 
@@ -618,22 +531,10 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-//        if( id == R.id.action_place_picker ) {
-//            displayPlacePicker();
-//            return true;
-//        } else if( id == R.id.action_guess_current_place ) {
-//            guessCurrentPlace();
-//            return true;
-//        }
-
-
-//    private void setSelectedStyle() {
-//        MapStyleOptions style;
-//        switch (mSelectedStyleId) {
         switch (item.getItemId()){
             case R.id.mapTypeNone:
                 // Sets the retro style via raw resource JSON.
-                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(MainActivity.this, R.raw.mapstyle_labels));
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(MainActivity.this, R.raw.mapstyle_normal));
 
                 break;
             case R.id.mapTypeNight:
@@ -649,33 +550,8 @@ public boolean onCreateOptionsMenu(Menu menu) {
                 // Sets the grayscale style via raw resource JSON.
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
-//            case R.string.style_label_no_pois_no_transit:
-//                // Sets the no POIs or transit style via JSON string.
-//                style = new MapStyleOptions("[" +
-//                        "  {" +
-//                        "    \"featureType\":\"poi.business\"," +
-//                        "    \"elementType\":\"all\"," +
-//                        "    \"stylers\":[" +
-//                        "      {" +
-//                        "        \"visibility\":\"off\"" +
-//                        "      }" +
-//                        "    ]" +
-//                        "  }," +
-//                        "  {" +
-//                        "    \"featureType\":\"transit\"," +
-//                        "    \"elementType\":\"all\"," +
-//                        "    \"stylers\":[" +
-//                        "      {" +
-//                        "        \"visibility\":\"off\"" +
-//                        "      }" +
-//                        "    ]" +
-//                        "  }" +
-//                        "]");
-//                break;
-//            case R.string.style_label_default:
-//                // Removes previously set style, by setting it to null.
-//                style = null;
-//                break;
+
+
             default:
                 break;
         }
@@ -696,6 +572,16 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
     private void normal() {
         norbutton = (Button)findViewById(R.id.normal);
+        norbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+            }
+        });
+    }
+
+    private void day() {
+        norbutton = (Button)findViewById(R.id.day);
         norbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -730,7 +616,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
@@ -777,22 +663,49 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
         EditText et  = (EditText) findViewById(R.id.editText);
         String location = et.getText().toString();
+        List<Address> list = null;
 
-        Geocoder gc = new Geocoder(this);
-        List<Address> list = gc.getFromLocationName(location, 1);
-        Address address = list.get(0);
-        String locality = address.getLocality();
-//        String area = address.getLocality();
+        if( !location.equals("")) {
+            Geocoder gc = new Geocoder(this);
+            try {
+                list = gc.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                Toast.makeText(this, "If No Results, Please re-enter place name", Toast.LENGTH_SHORT).show();
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+                Address address = list.get(0);
+                String locality = address.getLocality();
+                String area = address.getSubLocality();
 
 
-        Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, area, Toast.LENGTH_SHORT).show();
 
+                double lat = address.getLatitude();
+                double lng = address.getLongitude();
+                goToLocationZoom(lat, lng, 11);
 
-        double lat = address.getLatitude();
-        double lng = address.getLongitude();
-        goToLocationZoom(lat, lng, 10);
-
-        setMarker(locality, lat, lng);
+                setMarker(locality, lat, lng);
+            }
+        }
+//        Geocoder gc = new Geocoder(this);
+//        List<Address> list = gc.getFromLocationName(location, 1);
+//        Address address = list.get(0);
+//        String locality = address.getLocality();
+////        String area = address.getLocality();
+//
+//
+//        Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+//
+//
+//        double lat = address.getLatitude();
+//        double lng = address.getLongitude();
+//        goToLocationZoom(lat, lng, 10);
+//
+//        setMarker(locality, lat, lng);
 
     }
 
@@ -804,7 +717,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
         MarkerOptions options = new MarkerOptions()
                 .title(locality)
                 .draggable(true)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.redloca))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.iconw))
                 .position(new LatLng(lat, lng))
                 .snippet("I am here");
 
@@ -834,7 +747,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(390000);
+        mLocationRequest.setInterval(330000);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;

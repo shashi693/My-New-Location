@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimary">#546E7A</color>
     <color name="colorPrimaryDark">#607D8B</color>
-    <color name="colorAccent">#F57C00</color>
+    <color name="colorAccent">#f55e00</color>
     <color name="colorText">#FAFAFA</color>
+    <color name="colorwifi">#212121</color>
+
 
 
 

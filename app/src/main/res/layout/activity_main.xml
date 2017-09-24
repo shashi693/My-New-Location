@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
+    android:padding="0dp"
+    android:layout_margin="0dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
     tools:context="com.avenueinfotech.newlocation.MainActivity">
+
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -16,34 +18,129 @@
         <!--android:orientation="horizontal">-->
 
         <!--<Button-->
-            <!--android:text="Address"-->
+            <!--android:text="address"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:id="@+id/address"-->
             <!--android:onClick="lables"-->
-            <!--android:layout_weight=".6"-->
             <!--/>-->
 
         <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
             <!--android:id="@+id/addresstxt"-->
-            <!--android:layout_weight="19.4"-->
             <!--android:background="@color/colorText"-->
             <!--android:hint="Click to get your current Address"-->
-            <!--android:textStyle="bold|italic" />-->
+            <!--android:textStyle="bold|italic"-->
+            <!--/>-->
+
+   <!---->
+
 
     <!--</LinearLayout>-->
 
-    <!--<TextView-->
-        <!--android:id="@+id/textview"-->
-        <!--android:text="@string/default_place_text"-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/wifitext"
+            >
+
+            <ImageView
+                android:layout_marginTop="0dp"
+                app:srcCompat="@drawable/wifi27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="Wifi On"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/wifistatus"
+                android:textColor="@color/colorwifi"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+
+
+
+        <!--<Switch-->
+        <!--android:layout_width="90dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/wifiswitch"-->
+        <!--android:layout_toRightOf="@+id/wifitext"-->
+        <!--/>-->
+
+        <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-    <!--<AutoCompleteTextView-->
-        <!--android:id="@+id/predicttextview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp" />-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_toRightOf="@+id/wifitext"-->
+        <!--/>-->
+
+        <EditText
+            android:scrollbars="vertical"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/editText"
+            android:text="Orchid road, Singapore"
+            android:layout_alignBottom="@+id/wifitext"
+
+
+            android:layout_toRightOf="@+id/wifitext"
+            android:layout_toEndOf="@+id/wifitext"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="39dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/button"
+                android:layout_alignStart="@+id/button"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignLeft="@+id/button"
+                android:text="0"
+                android:textSize="10dp"
+                android:id="@+id/tv_degrees"
+                />
+
+            <Button
+                android:id="@+id/button"
+                style="@android:style/Widget.Button.Small"
+                android:layout_width="60dp"
+
+                android:layout_height="28dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:onClick="geoLocate"
+                android:text="Go"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#E8EAF6"/>
 
     <fragment
         android:id="@+id/map"
@@ -51,7 +148,27 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.95" />
+        android:layout_weight="0.965"/>
+
+
+    <!--<fragment-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:name="com.google.android.gms.maps.MapFragment"-->
+    <!--android:id="@+id/mapFragment"-->
+    <!--android:layout_weight="0.95" />-->
+
+    <!-- view for AdMob Banner Ad -->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,12 +180,10 @@
         android:layout_toEndOf="@+id/editText">
 
         <Button
-            android:text="@string/satellite"
-            android:layout_width="90dp"
-            android:layout_height="match_parent"
             android:id="@+id/satellite"
-            android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:layout_margin="0dp"
             android:layout_marginBottom="0dp"
             android:layout_marginEnd="0dp"
@@ -76,6 +191,9 @@
             android:layout_marginRight="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_light"
+            android:elevation="1dp"
             android:padding="0dp"
             android:paddingBottom="0dp"
             android:paddingEnd="0dp"
@@ -83,15 +201,16 @@
             android:paddingRight="0dp"
             android:paddingStart="0dp"
             android:paddingTop="0dp"
-            android:elevation="1dp"/>
+            android:text="@string/satellite"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="15sp" />
 
         <Button
-            android:text="@string/normal"
-            android:layout_width="90dp"
-            android:layout_height="match_parent"
             android:id="@+id/normal"
-            android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:layout_margin="0dp"
             android:layout_marginBottom="0dp"
             android:layout_marginEnd="0dp"
@@ -99,84 +218,48 @@
             android:layout_marginRight="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_blue_light"
             android:padding="0dp"
             android:paddingBottom="0dp"
             android:paddingEnd="0dp"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:paddingStart="0dp"
-            android:paddingTop="0dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/map">
-
-    <EditText
-        android:text="Times Square, Manhattan, NY, United States"
-        android:id="@+id/editText"
-        android:layout_weight="40"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:textSize="14sp" />
-
-
+            android:paddingTop="0dp"
+            android:text="@string/normal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="15sp" />
 
         <Button
-            android:text="@string/go"
-            android:layout_width="wrap_content"
+            android:id="@+id/day"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:id="@+id/button"
-            android:onClick="geoLocate"
+            android:layout_margin="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
             android:layout_weight="1"
-            android:elevation="3dp"
-            />
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="10"-->
-            <!--android:orientation="vertical">-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/satellite"-->
-            <!--android:text="@string/satellite"-->
-            <!--android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-            <!--android:layout_weight="1"-->
-            <!--android:elevation="5dp"-->
-            <!--android:textColor="#3E2723"-->
-            <!--android:background="@drawable/colorbutton"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/normal"-->
-            <!--android:text="@string/normal"-->
-            <!--android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-            <!--android:layout_weight="1"-->
-            <!--android:elevation="5dp"-->
-            <!--android:textColor="#3E2723"-->
-            <!--android:background="@drawable/colorbutton"/>-->
-
-        <!--</LinearLayout>-->
+            android:background="?attr/colorButtonNormal"
+            android:padding="0dp"
+            android:paddingBottom="0dp"
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingStart="0dp"
+            android:paddingTop="0dp"
+            android:text="@string/day"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id" />
 
 
 </LinearLayout>
