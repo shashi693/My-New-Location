@@ -36,125 +36,6 @@ tools:context="com.avenueinfotech.newlocation.MainActivity">
 
 <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id" />
-
-
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="42dp"
-    android:id="@+id/rel"
-    android:paddingTop="5dp"
-    >
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="2dp"
-        android:id="@+id/wifitext"
-        >
-
-        <ImageView
-            android:layout_marginTop="0dp"
-            app:srcCompat="@drawable/wifi27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="Wifi On"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/wifistatus"
-            android:textColor="@color/colorwifi"
-            android:textSize="10sp" />
-
-    </LinearLayout>
-
-
-
-
-    <!--<Switch-->
-    <!--android:layout_width="90dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/wifiswitch"-->
-    <!--android:layout_toRightOf="@+id/wifitext"-->
-    <!--/>-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/textView"-->
-    <!--android:layout_toRightOf="@+id/wifitext"-->
-    <!--/>-->
-
-    <EditText
-        android:scrollbars="vertical"
-        android:textSize="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/editText"
-        android:text="Orchid road, Singapore"
-        android:layout_alignBottom="@+id/wifitext"
-
-
-        android:layout_toRightOf="@+id/wifitext"
-        android:layout_toEndOf="@+id/wifitext"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="39dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/button"
-            android:layout_alignStart="@+id/button"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignLeft="@+id/button"
-            android:text="0"
-            android:textSize="10dp"
-            android:id="@+id/tv_degrees"
-            />
-
-        <Button
-            android:id="@+id/button"
-            style="@android:style/Widget.Button.Small"
-            android:layout_width="60dp"
-            android:layout_height="28dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:onClick="geoLocate"
-            android:text="Go"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
-
-    </RelativeLayout>
-
-
-
-</RelativeLayout>
-
-    </LinearLayout>
 
 
     <fragment
@@ -164,10 +45,10 @@ tools:context="com.avenueinfotech.newlocation.MainActivity">
         android:layout_height="wrap_content"
         android:layout_weight="0.962" />
 
-    <View
-    android:layout_width="fill_parent"
-    android:layout_height="2dp"
-    android:background="#E8EAF6"/>
+    <!--<View-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="2dp"-->
+    <!--android:background="#E8EAF6"/>-->
 
 
     <!--<fragment-->
@@ -183,7 +64,7 @@ tools:context="com.avenueinfotech.newlocation.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="20dp"
         android:layout_alignBottom="@+id/editText"
         android:orientation="horizontal"
         android:padding="0dp"
@@ -270,5 +151,125 @@ tools:context="com.avenueinfotech.newlocation.MainActivity">
             android:textSize="16sp" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id" />
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:id="@+id/rel"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginLeft="1dp"
+                android:id="@+id/wifitext"
+                >
+
+                <ImageView
+                    android:layout_marginTop="0dp"
+                    app:srcCompat="@drawable/wifi27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="Wifi On"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/wifistatus"
+                    android:textColor="@color/colorwifi"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+
+
+
+            <!--<Switch-->
+            <!--android:layout_width="90dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/wifiswitch"-->
+            <!--android:layout_toRightOf="@+id/wifitext"-->
+            <!--/>-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/textView"-->
+            <!--android:layout_toRightOf="@+id/wifitext"-->
+            <!--/>-->
+
+            <EditText
+                android:scrollbars="vertical"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/editText"
+                android:text="Orchid road, Singapore"
+                android:layout_alignBottom="@+id/wifitext"
+
+
+                android:layout_toRightOf="@+id/wifitext"
+                android:layout_toEndOf="@+id/wifitext"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="39dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/button"
+                    android:layout_alignStart="@+id/button"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_alignLeft="@+id/button"
+                    android:text="0"
+                    android:textSize="10dp"
+                    android:id="@+id/tv_degrees"
+                    />
+
+                <Button
+                    android:id="@+id/button"
+                    style="@android:style/Widget.Button.Small"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:onClick="geoLocate"
+                    android:text="Go"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>
