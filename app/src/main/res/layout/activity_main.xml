@@ -215,42 +215,59 @@
         <!--android:layout_toRightOf="@+id/wifitext"-->
         <!--/>-->
 
-        <EditText
-            android:scrollbars="vertical"
-            android:textSize="16dp"
+
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/editText"
-            android:text="Orchid road, Singapore"
+            android:layout_height="39dp"
             android:layout_alignBottom="@+id/wifitext"
 
 
             android:layout_toRightOf="@+id/wifitext"
-            android:layout_toEndOf="@+id/wifitext"/>
+            android:layout_toEndOf="@+id/wifitext">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="39dp">
-
-            <TextView
+            <EditText
+                android:scrollbars="vertical"
+                android:textSize="16dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/button"
-                android:layout_alignStart="@+id/button"
-                android:gravity="center_horizontal"
+                android:layout_height="42dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_alignLeft="@+id/button"
-                android:text="0"
-                android:textSize="10dp"
-                android:id="@+id/tv_degrees"
-                />
+                android:id="@+id/editText"
+                android:hint="Type Or Touch Mike"
+
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/imageButton"
+                android:layout_toStartOf="@+id/imageButton" />
+
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_above="@+id/button"-->
+            <!--android:layout_alignStart="@+id/button"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_alignLeft="@+id/button"-->
+            <!--android:text="0"-->
+            <!--android:textSize="10dp"-->
+            <!--android:id="@+id/tv_degrees"-->
+            <!--/>-->
+
+
+            <ImageView
+                android:id="@+id/imageButton"
+                android:layout_width="65dp"
+                android:layout_height="83dp"
+                android:layout_toLeftOf="@+id/button"
+                android:onClick="onButtonClick"
+                app:srcCompat="@android:drawable/presence_audio_busy" />
 
             <Button
                 android:id="@+id/button"
                 style="@android:style/Widget.Button.Small"
-                android:layout_width="60dp"
-
+                android:layout_width="40dp"
                 android:layout_height="28dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
@@ -259,7 +276,7 @@
                 android:onClick="geoLocate"
                 android:text="Go"
                 android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </RelativeLayout>

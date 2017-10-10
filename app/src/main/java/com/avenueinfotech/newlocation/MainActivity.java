@@ -3,6 +3,7 @@ package com.avenueinfotech.newlocation;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -15,6 +16,7 @@ import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -69,12 +71,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements
         OnMapReadyCallback, OnMyLocationButtonClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         ActivityCompat.OnRequestPermissionsResultCallback, LocationListener {
+
+    TextView et;
 
 //    InterstitialAd mInterstitialAd;
 //    private InterstitialAd interstitial;
@@ -218,6 +224,51 @@ public class MainActivity extends AppCompatActivity implements
         satellite();
         normal();
         day();
+
+        et  = (EditText) findViewById(R.id.editText);
+    }
+
+    public void onButtonClick(View v){
+
+        if(v.getId() == R.id.imageButton)
+        {
+
+            promptSpeechInput();
+        }
+
+
+    }
+
+    private void promptSpeechInput() {
+
+        Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL , RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE , Locale.getDefault());
+        i.putExtra(RecognizerIntent.EXTRA_PROMPT ,  "Say Something!");
+
+        try {
+            startActivityForResult(i, 100);
+        }
+        catch (ActivityNotFoundException a)
+        {
+            Toast.makeText(MainActivity.this , "Sorry! Your device dont support voice", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void onActivityResult(int request_code, int result_code, Intent i)
+    {
+        super.onActivityResult(request_code, result_code, i);
+
+        switch (request_code)
+        {
+            case 100: if(result_code == RESULT_OK && i != null)
+            {
+                ArrayList<String> result = i.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                et.setText(result.get(0));
+            }
+                break;
+        }
     }
 
     public static boolean hasPermissions(Context context, String... permissions) {
@@ -353,11 +404,11 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
-        if( requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK ) {
-            displayPlace( PlacePicker.getPlace( data, this ) );
-        }
-    }
+//    protected void onActivityResult( int requestCode, int resultCode, Intent data ) {
+//        if( requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK ) {
+//            displayPlace( PlacePicker.getPlace( data, this ) );
+//        }
+//    }
 
     private void displayPlace( Place place ) {
         if( place == null )
@@ -495,33 +546,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-//    public void satelite(View v) {
-//
-//        satbutton = (Button)findViewById(R.id.satellite);
-//        satbutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-//            }
-//        });
-//
-//    }
 
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.styled_map, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.menu_style_choose) {
-//            showStylesDialog();
-//        }
-//        return true;
-//    }
 @Override
 public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu, menu);
@@ -593,26 +618,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
 
 
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.string.style_label_retro:
-//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro);
-//                break;
-//            case R.string.style_label_night:
-//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
-//                break;
-//            case R.string.style_label_grayscale:
-//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale);
-//                break;
-//            case R.string.style_label_default:
-//                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
-//                break;
-//
-//            default:
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -661,7 +667,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
     public void geoLocate(View view) throws IOException {
 
-        EditText et  = (EditText) findViewById(R.id.editText);
+
         String location = et.getText().toString();
         List<Address> list = null;
 
@@ -686,7 +692,7 @@ public boolean onCreateOptionsMenu(Menu menu) {
 
                 double lat = address.getLatitude();
                 double lng = address.getLongitude();
-                goToLocationZoom(lat, lng, 11);
+                goToLocationZoom(lat, lng, 14);
 
                 setMarker(locality, lat, lng);
             }
